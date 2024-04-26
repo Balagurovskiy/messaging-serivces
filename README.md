@@ -1,6 +1,11 @@
 # messaging-serivces
-
+Нужно заимплементить отказоустойчивую систему, которая порционно будет записывать сообщения в базу данных (дополнительные улучшения будут плюсом)
+1. Имплементация 2х сервисов: 1. Сервис1 -генерирует много сообщений,  
+2. Сервис 2 - принимает, обрабатывает и записывает в Н2, сервис-2 - сервис с секьюрити - обязательно. 
+логирование отдельным компонентом.
 <br/>
-![image](https://github.com/Balagurovskiy/messaging-serivces/assets/38509010/45067caa-6df4-401a-824d-15380c84acd5)
+<p align="center">
+  <img src="[your_relative_path_here](https://github.com/Balagurovskiy/messaging-serivces/)" width="350" title="hover text">
+</p>
 
 
