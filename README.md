@@ -4,5 +4,6 @@
 2. Сервис 2 - принимает, обрабатывает и записывает в Н2, сервис-2 - сервис с секьюрити - обязательно. 
 логирование отдельным компонентом.
 <br/>
-![image][(https://github.com/Balagurovskiy/messaging-serivces/master/schema.jpg](https://github.com/Balagurovskiy/messaging-serivces/blob/32224211a58ee40765d2df2d54278c451b24a7ff/schema.jpg))
+![image](https://github.com/Balagurovskiy/messaging-serivces/assets/38509010/45067caa-6df4-401a-824d-15380c84acd5)
+
 
