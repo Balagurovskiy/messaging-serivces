@@ -5,7 +5,7 @@
 логирование отдельным компонентом.
 <br/>
 <p align="center">
-  <img src="[your_relative_path_here](https://github.com/Balagurovskiy/messaging-serivces/)" width="350" title="hover text">
+  <img src="https://github.com/Balagurovskiy/messaging-serivces/blob/7e1208cd0261b88d39befb6e51bfce953e1275e7/schema.jpg" width="350" title="hover text">
 </p>
 
 
