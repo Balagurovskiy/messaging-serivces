@@ -1,0 +1,63 @@
+package com.microtask.msggenerator.config;
+
+
+import com.microtask.msggenerator.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.Trigger;
+import org.springframework.scheduling.TriggerContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+
+import java.time.Instant;
+import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+@Configuration
+@EnableScheduling
+@RequiredArgsConstructor
+@Slf4j
+public class AuthScheduleConfig implements SchedulingConfigurer {
+
+    private final AuthService authService;
+
+    @Bean
+    public Executor taskExecutor() {
+        return Executors.newSingleThreadScheduledExecutor();
+    }
+
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setScheduler(taskExecutor());
+        taskRegistrar.addTriggerTask(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        log.info("Initiating auth task...");
+                        authService.token();
+                    }
+                },
+                new Trigger() {
+                    @Override
+                    public Instant nextExecution(TriggerContext triggerContext) {
+                        int expiry = authService.getExpiresSec() > 10 ? authService.getExpiresSec() - 10 : 10;
+                        expiry *= 1000;
+                        Optional<Date> lastCompletionTime =
+                                Optional.ofNullable(triggerContext.lastCompletionTime());
+                        Instant nextExecutionTime =
+                                lastCompletionTime.orElseGet(Date::new).toInstant()
+                                        .plusMillis(expiry);
+
+                        log.info(String.format("Creating next auth schedule [%s | %s]", expiry, Date.from(nextExecutionTime)));
+                        return nextExecutionTime;
+                    }
+                }
+        );
+    }
+}
+
