@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/message")
 @RequiredArgsConstructor
@@ -15,7 +17,7 @@ public class MessagesController {
     private final MessageService service;
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public String saveMsg(@RequestBody MessageRequest request){
+    public String saveMsg(@RequestBody MessageRequest request) throws ExecutionException, InterruptedException {
         return service.save(request.getMsg());
     }
 }

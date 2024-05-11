@@ -1,4 +1,4 @@
-package com.microtask.msggenerator.config;
+package com.microtask.msggenerator.security;
 
 
 import com.microtask.msggenerator.service.AuthService;
@@ -35,16 +35,12 @@ public class AuthScheduleConfig implements SchedulingConfigurer {
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(taskExecutor());
         taskRegistrar.addTriggerTask(
-                new Runnable() {
-                    @Override
-                    public void run() {
+                () -> {
+
                         log.info("Initiating auth task...");
-                        authService.token();
-                    }
+                        authService.refreshToken();
                 },
-                new Trigger() {
-                    @Override
-                    public Instant nextExecution(TriggerContext triggerContext) {
+                (TriggerContext triggerContext) -> {
                         int expiry = authService.getExpiresSec() > 10 ? authService.getExpiresSec() - 10 : 10;
                         expiry *= 1000;
                         Optional<Date> lastCompletionTime =
@@ -55,7 +51,6 @@ public class AuthScheduleConfig implements SchedulingConfigurer {
 
                         log.info(String.format("Creating next auth schedule [%s | %s]", expiry, Date.from(nextExecutionTime)));
                         return nextExecutionTime;
-                    }
                 }
         );
     }

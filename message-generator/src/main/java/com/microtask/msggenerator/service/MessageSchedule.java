@@ -1,8 +1,6 @@
-package com.microtask.msggenerator.config;
+package com.microtask.msggenerator.service;
 
 import com.microtask.msggenerator.dto.MessageRequest;
-import com.microtask.msggenerator.service.AuthService;
-import com.microtask.msggenerator.service.MessageSendingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -23,12 +21,12 @@ public class MessageSchedule {
     private final AuthService authService;
     @Async
     @Scheduled(fixedRate = 1000, initialDelay = 5000)
-    public void scheduleFixedRateTaskAsync() throws InterruptedException {
+    public void scheduleFixedRateTaskAsync(){
         if(Objects.nonNull(authService.getToken())){
             String msg = "### Message text ### ";
             log.info("Sending message :" + msg);
             sendingService.send(
-                    authService.token(),
+                    authService.getToken(),
                     new MessageRequest(msg)
             );
         } else {
