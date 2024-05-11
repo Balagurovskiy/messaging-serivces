@@ -1,4 +1,4 @@
-package com.microtask.msghandler.service;
+package com.microtask.msggenerator.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+
 @Service
 @RequiredArgsConstructor
 public class JwtTokenService {
@@ -25,6 +26,7 @@ public class JwtTokenService {
                 .build();
         return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
+
 
     public int getExpTime() {
         return EXPIRATION_TIME;
