@@ -1,14 +1,11 @@
 package com.microtask.msggenerator.service;
 
-import com.microtask.msggenerator.dto.AuthResponse;
 import com.microtask.msggenerator.dto.MessageRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
