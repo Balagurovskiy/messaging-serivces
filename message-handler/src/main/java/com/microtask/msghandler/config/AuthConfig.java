@@ -33,10 +33,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class AuthConfig {
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     SecurityFilterChain tokenSecurityFilterChain(HttpSecurity http) throws Exception {
