@@ -20,7 +20,7 @@ public class MessageSchedule {
     private final MessageSendingService sendingService;
     private final AuthService authService;
     @Async
-    @Scheduled(fixedRate = 1000, initialDelay = 5000)
+    @Scheduled(fixedRate = 500, initialDelay = 5000)
     public void scheduleFixedRateTaskAsync(){
         if(Objects.nonNull(authService.getToken())){
             String msg = "### Message text ### ";
