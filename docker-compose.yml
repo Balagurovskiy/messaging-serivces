@@ -40,3 +40,16 @@ services:
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
       - "3000:3000"
+
+#   add plugin in root pom.xml to create images for all services (use jib)
+#  message-handler:
+#    container_name: message-handler
+#    image: messages/message-handler:latest
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#
+#  message-generator:
+#    container_name: message-generator
+#    image: messages/message-generator:latest
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
