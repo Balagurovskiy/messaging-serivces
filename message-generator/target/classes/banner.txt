@@ -1,5 +1,0 @@
-
-            MESSAGE GENERATING SERVICE
-
-${application.title} ${application.version}
-Spring Boot ${spring-boot.version}
