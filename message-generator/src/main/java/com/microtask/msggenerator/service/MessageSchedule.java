@@ -19,6 +19,8 @@ import java.util.Objects;
 public class MessageSchedule {
     private final MessageSendingService sendingService;
     private final AuthService authService;
+
+    //TODO refactor into user input message (1 .. n)
     @Async
     @Scheduled(fixedRate = 500, initialDelay = 5000)
     public void scheduleFixedRateTaskAsync(){

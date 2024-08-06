@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageRequest {
+    //TDDO reconsider to add field or remove dto
     private String msg;
 }
