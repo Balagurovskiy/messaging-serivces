@@ -17,23 +17,19 @@ import java.util.concurrent.*;
 @Slf4j
 public class MessageService {
     private final MessageRepository repository;
-//    @Observed(name = "posts.save-message", contextualName = "posts.save-message")
 
     @Retryable(retryFor = SQLException.class, maxAttempts = 5)
     public String save(String request) throws ExecutionException, InterruptedException {
         return
-//                Executors
-//               .newVirtualThreadPerTaskExecutor()
-//               .submit(() -> {
             CompletableFuture.supplyAsync(() -> {
                         MessageEntity saveReq = new MessageEntity(request);
                         MessageEntity res = repository.save(saveReq);
-                        String resp =  String.format("Message saved at %s with id : %d",
+                        log.info(String.format("Message saved at %s with id : %d",
                                 LocalDateTime.now()
                                         .format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss")),
-                                res.getId());
-                        log.info(resp);
-                        return resp;
+                                res.getId()));
+
+                        return  res.getId().toString();
             }).get();
     }
 }
