@@ -1,10 +1,10 @@
 package com.microtask.msghandler.controller;
 
-import com.microtask.msghandler.dto.MessageRequest;
 import com.microtask.msghandler.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
@@ -15,9 +15,10 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class MessagesController {
     private final MessageService service;
-    @PostMapping()
+
+    @PostMapping(value = "/", consumes = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public String saveMsg(@RequestBody MessageRequest request) throws ExecutionException, InterruptedException {
-        return service.save(request.getMsg());
+    public String saveMsg(@RequestBody String request) throws ExecutionException, InterruptedException {
+        return service.save(request);
     }
 }

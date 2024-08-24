@@ -1,6 +1,5 @@
 package com.microtask.msggenerator.service;
 
-import com.microtask.msggenerator.dto.MessageRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +25,10 @@ public class MessageSchedule {
     public void scheduleFixedRateTaskAsync(){
         if(Objects.nonNull(authService.getToken())){
             String msg = "### Message text ### ";
-            log.info("Sending message :" + msg);
+            log.info("Sending message :{}", msg);
             sendingService.send(
                     authService.getToken(),
-                    new MessageRequest(msg)
+                    msg
             );
         } else {
             log.info("No token for message");

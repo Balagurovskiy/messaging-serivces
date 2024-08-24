@@ -19,7 +19,7 @@ public class HttpHeaderBuilder {
 
     public HttpHeaders createBearerHeaders(String token){
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.valueOf(MediaType.TEXT_PLAIN_VALUE));
         headers.add("Authorization", "Bearer " + token);
         return headers;
     }

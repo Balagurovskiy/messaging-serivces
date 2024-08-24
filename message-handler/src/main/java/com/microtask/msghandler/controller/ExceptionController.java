@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class ExceptionController {
     @ExceptionHandler(Exception.class)
-    //@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Server exception")
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     ResponseEntity handleException(Exception ex) {
         return ResponseEntity

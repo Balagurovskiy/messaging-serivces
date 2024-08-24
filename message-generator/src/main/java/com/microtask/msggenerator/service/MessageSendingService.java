@@ -1,13 +1,11 @@
 package com.microtask.msggenerator.service;
 
-import com.microtask.msggenerator.dto.MessageRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @RequiredArgsConstructor
@@ -26,23 +24,25 @@ public class MessageSendingService{
     @Value("${routing.message.protocol}")
     private String protocol;
 
-    public String send(String token, MessageRequest body){
+    public String send(String token, String body){
         String res = "";
         String theUrl = String.format("%s://%s/%s" , protocol, host, url);
-//        RestTemplate restTemplate = new RestTemplate();
         log.info(String.format("Request :: %s :: %s", theUrl, body));
         try {
-            HttpEntity<MessageRequest> entity = new HttpEntity<MessageRequest>(
+            HttpEntity<String> entity = new HttpEntity<String>(
                     body,
                     httpHeaderBuilder.createBearerHeaders(token));
-            ResponseEntity<String> response = restTemplate.exchange(theUrl, HttpMethod.POST, entity, String.class);
-            log.info("Response :: status ("+ response.getStatusCode() + ") :: body: " + response.getBody());
+            ResponseEntity<String> response = restTemplate.exchange(
+                    theUrl,
+                    HttpMethod.POST,
+                    entity,
+                    String.class
+            );
+            log.info("Response :: status ({}) :: body: {}", response.getStatusCode(), response.getBody());
             res = response.getBody();
-
-
         }
         catch (Exception eek) {
-            log.error("Exception :: "+ eek.getMessage());
+            log.error("Exception :: {}", eek.getMessage());
         }
         return res;
     }

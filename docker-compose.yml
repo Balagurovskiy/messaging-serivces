@@ -40,16 +40,47 @@ services:
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
       - "3000:3000"
-
+###################################################################
+#   IMAGE SETUP
 #   add plugin in root pom.xml to create images for all services (use jib)
+#   to use images have to be created new certificate exposed host as CN
+###################################################################
 #  message-handler:
 #    container_name: message-handler
-#    image: messages/message-handler:latest
+#    build:
+#      context: message-handler
+#      dockerfile: Dockerfile
+#    image: message-handler:latest
+#    ports:
+#      - 8081:8081
 #    environment:
 #      - SPRING_PROFILES_ACTIVE=docker
+#    depends_on:
+#      - tempo
+#      - loki
+#      - prometheus
+#      - grafana
+#    networks:
+#      - spring-cloud-network
 #
 #  message-generator:
 #    container_name: message-generator
-#    image: messages/message-generator:latest
+#    build:
+#      context: message-generator
+#      dockerfile: Dockerfile
+#    image: message-generator:latest
+#    ports:
+#      - 8082:8082
 #    environment:
 #      - SPRING_PROFILES_ACTIVE=docker
+#    depends_on:
+#      - tempo
+#      - loki
+#      - prometheus
+#      - grafana
+#      - message-handler
+#    networks:
+#      - spring-cloud-network
+#networks:
+#  spring-cloud-network:
+#    driver: bridge

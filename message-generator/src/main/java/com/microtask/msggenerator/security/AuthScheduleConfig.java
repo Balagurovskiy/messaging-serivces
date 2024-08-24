@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -36,19 +35,16 @@ public class AuthScheduleConfig implements SchedulingConfigurer {
         taskRegistrar.setScheduler(taskExecutor());
         taskRegistrar.addTriggerTask(
                 () -> {
-
                         log.info("Initiating auth task...");
                         authService.refreshToken();
                 },
                 (TriggerContext triggerContext) -> {
-                        int expiry = authService.getExpiresSec() > 10 ? authService.getExpiresSec() - 10 : 10;
-                        expiry *= 1000;
+                        int expiry = authService.getExpiresSec() * 1000;
                         Optional<Date> lastCompletionTime =
                                 Optional.ofNullable(triggerContext.lastCompletionTime());
                         Instant nextExecutionTime =
                                 lastCompletionTime.orElseGet(Date::new).toInstant()
                                         .plusMillis(expiry);
-
                         log.info(String.format("Creating next auth schedule [%s | %s]", expiry, Date.from(nextExecutionTime)));
                         return nextExecutionTime;
                 }
