@@ -43,7 +43,7 @@ services:
 ###################################################################
 #   IMAGE SETUP
 #   add plugin in root pom.xml to create images for all services (use jib)
-#   to use images have to be created new certificate exposed host as CN
+#   to use images have to be created new certificate for exposed host as CN
 ###################################################################
 #  message-handler:
 #    container_name: message-handler

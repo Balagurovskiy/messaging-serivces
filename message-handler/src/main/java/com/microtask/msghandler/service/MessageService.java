@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.concurrent.*;
 
 @Service
@@ -31,5 +32,13 @@ public class MessageService {
 
                         return  res.getId().toString();
             }).get();
+    }
+
+    public List<MessageEntity> getAll()  {
+        return repository.findAll();
+    }
+
+    public MessageEntity getOne(Long id)  {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("No message with such id"));
     }
 }
