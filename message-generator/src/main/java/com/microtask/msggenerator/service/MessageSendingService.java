@@ -1,5 +1,6 @@
 package com.microtask.msggenerator.service;
 
+import com.microtask.msggenerator.config.RoutingProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,19 +15,11 @@ public class MessageSendingService{
 
     private final HttpHeaderBuilder httpHeaderBuilder;
     private final RestTemplate restTemplate;
-
-    @Value("${routing.message.url}")
-    private String url;
-
-    @Value("${routing.message.host}")
-    private String host;
-
-    @Value("${routing.message.protocol}")
-    private String protocol;
+    private final RoutingProperties routs;
 
     public String send(String token, String body){
         String res = "";
-        String theUrl = String.format("%s://%s/%s" , protocol, host, url);
+        String theUrl = String.format("%s://%s/%s" , routs.getProtocol(), routs.getHost(), routs.getUrl());
         log.info(String.format("Request :: %s :: %s", theUrl, body));
         try {
             HttpEntity<String> entity = new HttpEntity<String>(
@@ -46,8 +39,4 @@ public class MessageSendingService{
         }
         return res;
     }
-
-
-
-
 }

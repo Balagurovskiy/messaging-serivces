@@ -4,6 +4,8 @@ import com.microtask.msghandler.entity.MessageEntity;
 import com.microtask.msghandler.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,8 @@ import java.util.concurrent.*;
 public class MessageService {
     private final MessageRepository repository;
 
-    @Retryable(retryFor = SQLException.class, maxAttempts = 5)
+
+    @Retryable(retryFor = SQLException.class, maxAttemptsExpression = "${retry.maxAttempts}")
     public String save(String request) throws ExecutionException, InterruptedException {
         return
             CompletableFuture.supplyAsync(() -> {
@@ -32,6 +35,12 @@ public class MessageService {
 
                         return  res.getId().toString();
             }).get();
+    }
+
+    @Recover
+    public String saveRecover(){
+        log.info("Message saving is currently not available!");
+        return "-1";
     }
 
     public List<MessageEntity> getAll()  {

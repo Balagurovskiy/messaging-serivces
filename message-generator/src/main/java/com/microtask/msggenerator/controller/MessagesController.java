@@ -9,13 +9,13 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/message")
 @RequiredArgsConstructor
 @Slf4j
 public class MessagesController {
+    
     private final MessageSendingService sendingService;
     private final AuthService authService;
 
