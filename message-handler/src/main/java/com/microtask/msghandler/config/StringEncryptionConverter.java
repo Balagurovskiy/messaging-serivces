@@ -12,11 +12,13 @@ import java.util.Base64;
 
 @Converter
 public class StringEncryptionConverter implements AttributeConverter<String, String> {
-    @Value("${encryption.algorithm}")
+    @Value("${encryption.converter.algorithm}")
     private String ALGORITHM;
-
+    @Value("${encryption.converter.key}")
+    private String KEY;
     //TODO make startup arguments for keys
-    private static final Key AES_KEY = new SecretKeySpec("00016-bit-secret".getBytes(), "AES");
+    private final Key AES_KEY = new SecretKeySpec(KEY.getBytes(), "AES");
+
     @Override
     public String convertToDatabaseColumn(String ccNumber) {
         try {

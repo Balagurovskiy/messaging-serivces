@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = MessageHandlerTest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -70,3 +71,4 @@ public class MessageControllerTest {
                 .andExpect(jsonPath("$.message").value(testMessage));
     }
 }
+
