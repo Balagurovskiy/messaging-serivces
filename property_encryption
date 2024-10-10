@@ -1,3 +1,0 @@
-mvn jasypt:encrypt "-Djasypt.encryptor.password=enc_key"
-mvn jasypt:decrypt "-Djasypt.encryptor.password=enc_key"
-java -jar target/jasypt-spring-boot-demo-0.0.1-SNAPSHOT.jar --jasypt.encryptor.password=enc_key
