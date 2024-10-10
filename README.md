@@ -4,9 +4,7 @@
 2. Сервис 2 - принимает, обрабатывает и записывает в Н2, сервис-2 - сервис с секьюрити - обязательно. 
 логирование отдельным компонентом.
 <br/>
-<p align="center">
-  <img src="https://github.com/Balagurovskiy/messaging-serivces/schema.jpg" title="hover text">
-</p>
+
 
 
 # BUILD / DEPLOYMENT
@@ -80,4 +78,8 @@ Update appender url in **logback-spring.xml** with host related to prod env.
     `` mvn clean install`` <br/>
 2. Execute docker compose for prod; separate image creation not required (docker build -t <name>): <br/>
 ``docker-compose -f docker-compose-prod.yml up`` <br/>
-
+### FUNC SCHEMA
+<br/>
+<p align="center">
+  <img src="https://github.com/Balagurovskiy/messaging-serivces/blob/24f41d51ec9a8fd5826d9712550dd2816f03b958/scheme.jpg" title="hover text">
+</p>
