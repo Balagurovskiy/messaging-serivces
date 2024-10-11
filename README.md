@@ -13,9 +13,9 @@
 1. Select **dev** profile in **application.properties**
 2. Generate certificates for https (classpath:resources/certs/https): <br/>
 
-``openssl genpkey -algorithm RSA -out private-key.pem -pkeyopt rsa_keygen_bits:2048`` <br/>
+``openssl genpkey -algorithm RSA -out private-key.pem -pkeyopt rsa_keygen_bits:2048`` <br/><br/>
 ``openssl req -new -x509 -key private-key.pem -out public-cert.pem -days 365 \`` <br/>
-`` -subj "/C=US/ST=State/L=City/O=Comp/OU=ITDep/CN=localhost/emailAddress=xx@comp.com"`` <br/>
+`` -subj "/C=US/ST=State/L=City/O=Comp/OU=ITDep/CN=localhost/emailAddress=xx@comp.com"`` <br/><br/>
 ``openssl pkcs12 -export \ ``<br/> 
 `` -in public-cert.pem -inkey private-key.pem -out service-keystore.p12 \ ``<br/> 
 `` -name service-alias -passout pass:your_password`` <br/>
