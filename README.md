@@ -4,9 +4,7 @@
 2. Сервис 2 - принимает, обрабатывает и записывает в Н2, сервис-2 - сервис с секьюрити - обязательно. 
 логирование отдельным компонентом.
 <br/>
-<p align="center">
-  <img src="https://github.com/Balagurovskiy/messaging-serivces/schema.jpg" title="hover text">
-</p>
+
 
 
 # BUILD / DEPLOYMENT
@@ -15,12 +13,12 @@
 1. Select **dev** profile in **application.properties**
 2. Generate certificates for https (classpath:resources/certs/https): <br/>
 
-``openssl genpkey -algorithm RSA -out private-key.pem -pkeyopt rsa_keygen_bits:2048`` <br/>
-``sleep 5s`` <br/>
+``openssl genpkey -algorithm RSA -out private-key.pem -pkeyopt rsa_keygen_bits:2048`` <br/><br/>
 ``openssl req -new -x509 -key private-key.pem -out public-cert.pem -days 365 \`` <br/>
-``-subj "/C=US/ST=California/L=SanFrancisco/O=MyCompany/OU=ITDepartment/CN=localhost/emailAddress=admin@mycompany.com"`` <br/>
-``sleep 5s`` <br/>
-``openssl pkcs12 -export -in public-cert.pem -inkey private-key.pem -out service-keystore.p12 -name service-alias -passout pass:your_password`` <br/>
+`` -subj "/C=US/ST=State/L=City/O=Comp/OU=ITDep/CN=localhost/emailAddress=xx@comp.com"`` <br/><br/>
+``openssl pkcs12 -export \ ``<br/> 
+`` -in public-cert.pem -inkey private-key.pem -out service-keystore.p12 \ ``<br/> 
+`` -name service-alias -passout pass:your_password`` <br/>
 
 3. With created service-keystore.p12 and pass:your_password update dev properties to enable ssl for endpoints:<br/>
 ``server.ssl.key-store=classpath:certs/https/service-keystore.p12`` <br/>
@@ -40,7 +38,7 @@
 generate truststore : <br/>
 ``keytool -importcert -file public-cert.pem -alias truststore_cert -keystore sending-truststore.p12 -storetype PKCS12 -storepass your_password`` <br/>
 
-7. With created sending-truststore.p12 and pass:your_password update dev properties to enable ssl for requests:<br/>
+7. With created sending-truststore.p12 and pass:your_password update dev properties to enable ssl for requests:
 ``spring.ssl.bundle.jks.bundle-client.truststore.location=classpath:certs/https/sending-truststore.p12`` <br/>
 ``spring.ssl.bundle.jks.bundle-client.truststore.password=DEC(your_password)`` <br/>
 8. Generate certificates for jwt:<br/>
@@ -80,4 +78,8 @@ Update appender url in **logback-spring.xml** with host related to prod env.
     `` mvn clean install`` <br/>
 2. Execute docker compose for prod; separate image creation not required (docker build -t <name>): <br/>
 ``docker-compose -f docker-compose-prod.yml up -d`` <br/>
-
+### FUNC SCHEMA
+<br/>
+<p align="center">
+  <img src="https://github.com/Balagurovskiy/messaging-serivces/blob/24f41d51ec9a8fd5826d9712550dd2816f03b958/scheme.jpg" title="hover text">
+</p>
