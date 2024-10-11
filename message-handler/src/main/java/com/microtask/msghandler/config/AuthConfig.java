@@ -41,11 +41,12 @@ public class AuthConfig {
                 .cors(Customizer.withDefaults())
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .requiresChannel(channel -> channel
-                        .requestMatchers("/message/**")
+                        .requestMatchers(HttpMethod.POST,"/message/**")
                         .requiresSecure())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/actuator/**").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/h2-console/").permitAll();
+                    auth.requestMatchers("/h2-console/").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/message/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

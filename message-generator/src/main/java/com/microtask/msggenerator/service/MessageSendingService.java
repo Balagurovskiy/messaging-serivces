@@ -36,6 +36,7 @@ public class MessageSendingService{
         }
         catch (Exception eek) {
             log.error("Exception :: {}", eek.getMessage());
+            res = eek.getMessage();
         }
         return res;
     }

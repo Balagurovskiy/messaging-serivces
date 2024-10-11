@@ -9,8 +9,8 @@ scrape_configs:
   - job_name: 'message-generator'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:8082'] ## host.docker.internal for demo
+      - targets: ['host.docker.internal:8082'] ## host.docker.internal for dev
   - job_name: 'message-handler'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:8081'] ## host.docker.internal for demo
+      - targets: ['host.docker.internal:8081'] ## host.docker.internal for dev

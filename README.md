@@ -40,7 +40,7 @@
 generate truststore : <br/>
 ``keytool -importcert -file public-cert.pem -alias truststore_cert -keystore sending-truststore.p12 -storetype PKCS12 -storepass your_password`` <br/>
 
-7. With created sending-truststore.p12 and pass:your_password update dev properties to enable ssl for requests:
+7. With created sending-truststore.p12 and pass:your_password update dev properties to enable ssl for requests:<br/>
 ``spring.ssl.bundle.jks.bundle-client.truststore.location=classpath:certs/https/sending-truststore.p12`` <br/>
 ``spring.ssl.bundle.jks.bundle-client.truststore.password=DEC(your_password)`` <br/>
 8. Generate certificates for jwt:<br/>
@@ -65,19 +65,19 @@ generate truststore : <br/>
    `` mvn clean install`` <br/>
 11. Execute docker compose for dev (password have to be the same as in steps 5, 8) : <br/>
 
-    ``docker-compose up`` <br/>
+    ``docker-compose up -d`` <br/>
     ``java -jar message-handler/target/message-handler.jar --jasypt.encryptor.password=ENC_KEY`` <br/>
     ``java -jar message-generator/target/message-generator.jar --jasypt.encryptor.password=ENC_KEY`` <br/>
 ### PROD
 #### message-generator / message-handler
 Properties should be updated with **prod** profile and all other steps should be similar to dev setup.<br/>
 Each application should be prepared for release environment: prod properties have to be updated with db, host details (zipkin etc), certificate namings <br/>
-(**CA subject** for release https certificate have to updated with host details for **message-handler** in **prod** env). <br/>
+(**CA subject** for release https certificate have to updated with host details for **message-handler** in **prod** env).
 Update Docker file **ENTRYPOINT** : ... --jasypt.encryptor.password=ENC_KEY  (password have to be the same as during maven encryption process). <br/>
 Update appender url in **logback-spring.xml** with host related to prod env.
 #### messages (root folder)
 1. Build applications : <br/>
     `` mvn clean install`` <br/>
 2. Execute docker compose for prod; separate image creation not required (docker build -t <name>): <br/>
-``docker-compose -f docker-compose-prod.yml up`` <br/>
+``docker-compose -f docker-compose-prod.yml up -d`` <br/>
 

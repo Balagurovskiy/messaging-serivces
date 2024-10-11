@@ -1,5 +1,6 @@
 package com.microtask.msghandler.config;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +17,13 @@ public class StringEncryptionConverter implements AttributeConverter<String, Str
     private String ALGORITHM;
     @Value("${encryption.converter.key}")
     private String KEY;
-    //TODO make startup arguments for keys
-    private final Key AES_KEY = new SecretKeySpec(KEY.getBytes(), "AES");
 
+    private Key AES_KEY;
+
+    @PostConstruct
+    public void init(){
+        AES_KEY = new SecretKeySpec(KEY.getBytes(), "AES");
+    }
     @Override
     public String convertToDatabaseColumn(String ccNumber) {
         try {
