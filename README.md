@@ -55,7 +55,7 @@ generate truststore : <br/>
    ``security.key.size=2048`` <br/>
    ``security.bundle.name=bundle-client`` <br/>
 
-9. Encrypt sensitive information using maven plugin:  <br/>
+9. Encrypt sensitive information using maven plugin (using pattern ENC(...) in properties):  <br/>
    ``mvn jasypt:encrypt "-Djasypt.encryptor.password=ENC_KEY"`` <br/>
 
 #### messages (root folder)
